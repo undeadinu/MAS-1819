@@ -142,17 +142,7 @@ def countdown(n):
 
 countdown(20)
 
-#alphabet = "abcdefghijklmnopqrstuvwxyz"
-#
-#def countdown_abc(letter):
-#    for l in alphabet:
-#        while letter >= z:
-#            if letter == z:
-#                print("End!")
-#                else:
-#                    print letter,
-#            letter -= 1
-
+print
 
 # comparison
 def compare_food(food_a, food_b):
