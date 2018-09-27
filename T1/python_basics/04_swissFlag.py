@@ -18,10 +18,10 @@ import random as r
 
 
 
-sys.path.append("/Users/harley_quinn/Documents/GitHub/MAS-1819/T1")
+sys.path.append("..")
 #print sys.path
 
-from grlib.graphics import*
+from grlib.graphics import *
 
 #Circles, Rectangles, Oval, Polygons, Text, Entry, Images
 
