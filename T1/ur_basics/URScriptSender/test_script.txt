@@ -1,0 +1,25 @@
+def ur_script():
+ 
+ set_tcp(p[0.0, 0.0, 0.0, 0.0, 3.14159, 0.0])
+ 
+ movel(p[0.400, 0.400, 0.400, 0.000, 0.000, 0.000], a = 1.0, v = 0.1)
+ 
+ sleep(0.5) 
+ set_digital_out(4, True)
+ sleep(0.5)
+ 
+ movel(p[0.400, 0.400, 0.000, 0.000, 0.000, 0.000], a = 1.0, v = 0.1)
+ 
+ sleep(0.5) 
+ set_digital_out(4, False)
+ sleep(0.5)
+ 
+ movel(p[0.400, 0.200, 0.400, 0.000, 0.000, 0.000], a = 1.0, v = 0.1)
+ 
+ sleep(0.5) 
+ set_digital_out(4, True)
+ sleep(0.5) 
+ 
+end
+ 
+ur_script()
