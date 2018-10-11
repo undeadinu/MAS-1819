@@ -6,12 +6,12 @@ from primitives import *
 from io import *
 
 def setup():
-    size(1920,1080,P3D)
+    size(800,450,P3D)
     cam = PeasyCam(this,500)
     noStroke()
     
     global bgimage
-    bgimage = loadImage("galactic_starfield.jpg")
+    bgimage = loadImage("galactic_starfield_800x450.jpg")
 
     global planet1, planet2, planet3, planet4
     rp = RulePyramid()
@@ -27,7 +27,7 @@ def setup():
     
     export_obj(planet1,"obj_exports/sun.obj")
         
-    b = Box(0,0,0,60,60,60)
+    b = Dodecahedron(0,0,0,40)
     planet2 = b.get_mesh()
     for i in range(3):
         planet2 = rp.replace(planet2, 10-i*6)
@@ -77,7 +77,7 @@ def draw():
     
     # display the sun (p1)
     pushMatrix()
-    rotateZ(frameCount/200.0)
+    rotateZ(-frameCount/200.0)
     for f in planet1.faces:
         beginShape()
         for n in f.nodes:
@@ -105,6 +105,7 @@ def draw():
     pushMatrix()
     rotateZ(-frameCount/50.0)
     translate(100,0,0)
+    rotateZ(-frameCount/40.0)
     for f in planet4.faces:
         beginShape()
         for n in f.nodes:
@@ -118,6 +119,7 @@ def draw():
     pushMatrix()
     rotateZ(-frameCount/60.0)
     translate(350,0,0)
+    rotateZ(-frameCount/60.0)
     for f in planet3.faces:
         beginShape()
         for n in f.nodes:
@@ -126,6 +128,6 @@ def draw():
     popMatrix()
     
     # export every frame into an image
-    if frameCount<-1:
+    if frameCount%5==0 and frameCount<-1:
         saveFrame("export/####.png")
     

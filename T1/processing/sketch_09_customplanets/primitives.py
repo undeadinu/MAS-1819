@@ -76,6 +76,11 @@ class Dodecahedron(object):
         nodes.append(Node(-1/phi,0, phi))
         nodes.append(Node( 1/phi,0, phi))
         
+        for i in range(len(nodes)):
+            vadd = nodes[i].addition(self.loc)
+            vadd = vadd.multiply(self.rad)
+            nodes[i] = Node(vadd.x, vadd.y, vadd.z)
+        
         m.add_face(Face([nodes[2], nodes[9], nodes[6], nodes[18], nodes[19]]))
         m.add_face(Face([nodes[4], nodes[11], nodes[0], nodes[19], nodes[18]]))
         m.add_face(Face([nodes[18], nodes[6], nodes[12], nodes[13], nodes[4]]))
