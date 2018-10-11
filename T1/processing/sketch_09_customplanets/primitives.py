@@ -78,6 +78,7 @@ class Dodecahedron(object):
         
         for i in range(len(nodes)):
             vadd = nodes[i].addition(self.loc)
+            vadd = vadd.normalized()
             vadd = vadd.multiply(self.rad)
             nodes[i] = Node(vadd.x, vadd.y, vadd.z)
         
