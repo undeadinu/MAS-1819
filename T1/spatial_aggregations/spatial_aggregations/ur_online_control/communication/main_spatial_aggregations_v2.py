@@ -53,8 +53,6 @@ def main():
         print("1: continue_fabrication: %i" % continue_fabrication)
         print ("start fabrication")
 
-        ur.send_command_digital_out(0, True) # Turn ON
-
         """
         if not continue_fabrication:
             break
@@ -71,9 +69,10 @@ def main():
         ur.send_command_movel([x, y, z, ax, ay, az], v=speed, a=acc)
         ur.send_command_wait(0.5)
 
-        waiting_times = gh.wait_for_float_list() #3 client.send(MSG_FLOAT_LIST, safe_in_pose_cmd)
-        print("NEW: waiting_times")
-
+        ### NEW
+        loop_pose_cmd = gh.wait_for_float_list() #3 client.send(MSG_FLOAT_LIST, safe_in_pose_cmd)
+        print("NEW: loop_pose")
+        ### NEW
 
         len_command = gh.wait_for_int()             #4 client.send(MSG_INT, len_command)
         print ("4: len command list")
@@ -85,26 +84,32 @@ def main():
         print("We received %i commands." % len(commands))
 
         # placing path
-        for i in range(0, len(commands), 1):
+        for i in range(0, len(commands), 3):
+
+            #move to loop pose
+            x, y, z, ax, ay, az, speed, acc = loop_pose_cmd
+            ur.send_command_movel([x, y, z, ax, ay, az], v=speed, a=acc)
+
+            ur.send_command_digital_out(0, True)
+            ur.send_command_wait(3.0)
+
+            #above placing
             placing_cmd = commands[i]
-            wait = waiting_times[i]
-            print (wait)
-            if i == 0:
-                x, y, z, ax, ay, az, speed, radius = placing_cmd
-                ur.send_command_movel([x, y, z, ax, ay, az], v=speed, r=radius)
-            else:
-                # turn sand on
-                ur.send_command_digital_out(0, False) # Turn ON extruder
-                # wait
-                ur.send_command_wait(3.0)
-                # turn sand off
-                ur.send_command_digital_out(0, True) # Turn OFF extruder
-                # wait again
-                ur.send_command_wait(5.0)
-                # move to next point
-                x, y, z, ax, ay, az, speed, radius = placing_cmd
-                ur.send_command_movel([x, y, z, ax, ay, az], v=speed, r=radius)
-                #ur.send_command_movel([x, y, z, ax, ay, az], r=radius, t=2)
+            x, y, z, ax, ay, az, speed, radius = placing_cmd
+            ur.send_command_movel([x, y, z, ax, ay, az], v=speed, r=radius)
+
+            #placing
+            placing_cmd = commands[i+1]
+            x, y, z, ax, ay, az, speed, radius = placing_cmd
+            ur.send_command_movel([x, y, z, ax, ay, az], v=speed, r=radius)
+
+            ur.send_command_wait(5.0)
+            ur.send_command_digital_out(0, False)
+
+            #above placing
+            placing_cmd = commands[i+2]
+            x, y, z, ax, ay, az, speed, radius = placing_cmd
+            ur.send_command_movel([x, y, z, ax, ay, az], v=speed, r=radius)
 
         ur.send_command_digital_out(0, True) # Turn OFF extruder
         ur.send_command_wait(0.5)
