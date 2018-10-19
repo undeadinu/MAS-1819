@@ -127,7 +127,7 @@ def draw():
         endShape(CLOSE)
     popMatrix()
     
-    # export every frame into an image
+    # export every 5th frame into an image
     if frameCount%5==0 and frameCount<-1:
         saveFrame("export/####.png")
     
