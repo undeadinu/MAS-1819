@@ -5,6 +5,7 @@ from rules import *
 from primitives import *
 from io import *
 from combinations import *
+from modifications import *
 
 import octree as oc
 
@@ -16,7 +17,7 @@ def setup():
     cam = PeasyCam(this,700)
     
     #strokeWeight(5)
-    #noStroke()
+    noStroke()
     
     global s,c,t,b,s2, rb
     global u,ints,subtr
@@ -29,17 +30,21 @@ def setup():
     t = Torus(raddonut=130, radpipe=60)
     b = Box(a=150,b=250,c=200)
     d = Dodecahedron(rad=150)
-    rb = RBox(a=300,b=250,c=200,r=50)
+    rb = RBox(a=150,b=250,c=200,r=50)
     
     # create boolean combinations
-    u = Union(s,s2)
+    u = Union(s,t)
+    bl = Blend(s,t,r=30)
     ints = Intersection(s,s2)
-    subtr = Subtraction(rb,s2)
+    subtr = Subtraction(s,s2)
+    
+    shell = Shell(bl,20,1)
+    subtr = Subtraction(shell,rb)
     
     mcmesh = Mesh()
-    ot = oc.OcTree(Vector(0,0,0), 400.0)
-    ot.set_level(5)
-    ot.distobj = t
+    ot = oc.OcTree(Vector(0,0,0), 450.0)
+    ot.set_level(7)
+    ot.distobj = subtr
     ot.divide(ot.rootnode, mcmesh)
     
     sh = createShape()
@@ -59,58 +64,3 @@ def draw():
     
     shape(sh)
     
-    """
-    res = 10
-    for x in range(-200,200,res):
-        for y in range(-200,200,res):
-            for z in range(-200,200,res):
-                d = t.get_distance(x,y,z)
-                
-                # calculate fill color
-                # col = color(0,d,0)
-                # if d<0:
-                #     col = color(-d,0,0)
-                
-                #if abs(d)<res:
-                if d<0:
-                    pushMatrix()
-                    translate(x,y,z)
-                    box(res)
-                    popMatrix()
-    """
-    """
-    lights()
-    
-    pushMatrix()
-    rotate(TWO_PI*0/5.0)
-    translate(400,0)
-    shape(ss)
-    popMatrix()
-    
-    pushMatrix()
-    rotate(TWO_PI*1/5.0)
-    translate(400,0)
-    shape(cs)
-    popMatrix()
-    
-    pushMatrix()
-    rotate(TWO_PI*2/5.0)
-    translate(400,0)
-    shape(ts)
-    popMatrix()
-    
-    pushMatrix()
-    rotate(TWO_PI*3/5.0)
-    translate(400,0)
-    shape(bs)
-    popMatrix()
-    
-    pushMatrix()
-    rotate(TWO_PI*4/5.0)
-    translate(400,0)
-    shape(ds)
-    popMatrix()
-    """
-
-def keyPressed():
-    saveFrame("####.png")
