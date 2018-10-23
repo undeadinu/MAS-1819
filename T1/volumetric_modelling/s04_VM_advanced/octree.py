@@ -19,19 +19,18 @@ class OcTree():
         self.maxlevels = n
         #print self.worldsize/(2**self.maxlevels)
 
-    def divide(self, n, res):
-        if n.level < self.maxlevels:
-            d = self.distobj.get_distance(n.pos.x, n.pos.y, n.pos.z)
-            n.distance = d
-            if abs(d) < self.sqrt3 * n.edge/2:
-                n.divide_node()
-                for b in n.branches:
+    def divide(self, node, res):
+        if node.level < self.maxlevels:
+            d = self.distobj.get_distance(node.pos.x, node.pos.y, node.pos.z)
+            node.distance = d
+            if abs(d) < self.sqrt3 * node.edge/2:
+                node.divide_node()
+                for b in node.branches:
                     self.divide(b,res)
         else:
-            cm = mc.marching_cubes_3d_single_cell(self.distobj.get_distance, n.pos.x, n.pos.y, n.pos.z, n.edge/1.0)
-            #res.extend(cm)
+            cm = mc.marching_cubes_3d_single_cell(self.distobj.get_distance,
+                                                  node.pos.x, node.pos.y, node.pos.z, node.edge)
             res.add_faces(cm.faces)
-            pass
             
 
 class OctNode():

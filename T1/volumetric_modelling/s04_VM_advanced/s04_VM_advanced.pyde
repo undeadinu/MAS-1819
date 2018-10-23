@@ -9,7 +9,7 @@ from modifications import *
 import octree as oc
 
 def setup():
-    size(800,450,P3D)
+    size(1200,675,P3D)
     cam = PeasyCam(this,700)
     
     #strokeWeight(5)

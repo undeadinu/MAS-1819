@@ -27,7 +27,7 @@ class Twist(object):
         
     def get_distance(self,x,y,z):
         bnds = self.o.get_bounds()
-        t = (z-bnds[2])/(bnds[5]-bnds[2])
+        t = (z-bnds[2])/(bnds[5]-bnds[2]) - 0.5
         #theta = (1-t)*self.angle + t*-self.angle
         theta = t*self.angle
         nx = (x*math.cos(theta) - y*math.sin(theta))
