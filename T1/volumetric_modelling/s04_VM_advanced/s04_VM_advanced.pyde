@@ -17,6 +17,8 @@ def setup():
     noStroke()
     
     global ix, dobjs, st, bt, sh, mcmesh
+    global sl # subdivision level
+    sl = 3
     ix = 0
     dobjs = []
     st = Sphere(40,40,40,150)
@@ -37,6 +39,13 @@ def setup():
     dobjs.append(Intersection(Gyroid(w=60),bt))
     dobjs.append(Intersection(Diamond(w=60),bt))
     dobjs.append(Intersection(SchwartzP(w=60),bt))
+    dobjs.append(Intersection(Shell(Gyroid(w=80),d=1.0,s=0.5),bt))
+    dobjs.append(Intersection(FischerKoch(w=80),bt))
+
+    # gyr = Gyroid(w=80)
+    # shell = Shell(gyr,d=1.0,s=0.5)
+    # ints = Intersection(shell,bt)
+    # dobjs.append(ints)
     
     recalc_geom(dobjs[ix])
 
@@ -52,23 +61,29 @@ def draw():
 
 
 def recalc_geom(dobj):
-    global sh,mcmesh
+    global sh,mcmesh,sl
     mcmesh = Mesh()
     ot = oc.OcTree(Vector(0,0,0), 400.0)
-    ot.set_level(6)
+    ot.set_level(sl)
     ot.distobj = dobj
     ot.divide(ot.rootnode, mcmesh)
     sh = get_pshape(mcmesh)
 
 
 def keyPressed():
-    global ix,mcmesh
+    global ix,mcmesh,sl
     n = len(dobjs)
     if key=='q':
         ix = (ix+1)%n
         recalc_geom(dobjs[ix])
     elif key =='a':
         ix = (ix-1)%n
+        recalc_geom(dobjs[ix])
+    elif key=='w':
+        sl += 1
+        recalc_geom(dobjs[ix])
+    elif key=='s':
+        sl = max(0,sl-1)
         recalc_geom(dobjs[ix])
     elif key =='e':
         export_obj(mcmesh,'accuracy_test.obj')

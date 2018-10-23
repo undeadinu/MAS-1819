@@ -28,3 +28,10 @@ class Diamond(TPMS):
             math.sin(px) * math.cos(py) * math.cos(pz) + 
             math.cos(px) * math.sin(py) * math.cos(pz) +
             math.cos(px) * math.cos(py) * math.sin(pz))
+        
+class FischerKoch(TPMS):
+    def get_value(self,px,py,pz):
+        return (
+            math.cos(2*px) * math.sin(py) * math.cos(pz) +
+            math.cos(2*py) * math.sin(pz) * math.cos(px) +
+            math.cos(2*pz) * math.sin(px) * math.cos(py))
