@@ -100,6 +100,9 @@ class Mesh(object):
         n.id = len(self.nodes)
         
     def collect_nodes(self):
+        for n in self.nodes:
+            n.id = -1
+        self.nodes = []
         for f in self.faces:
             for n in f.nodes:
                 if n.id < 0:

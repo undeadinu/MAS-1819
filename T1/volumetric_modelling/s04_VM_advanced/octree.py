@@ -31,6 +31,8 @@ class OcTree():
             cm = mc.marching_cubes_3d_single_cell(self.distobj.get_distance,
                                                   node.pos.x, node.pos.y, node.pos.z, node.edge)
             res.add_faces(cm.faces)
+            for n in cm.nodes:
+                res.add_node(n)
             
 
 class OctNode():
