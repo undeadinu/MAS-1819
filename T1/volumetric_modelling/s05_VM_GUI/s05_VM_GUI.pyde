@@ -72,22 +72,22 @@ def draw():
 
 
 def gui():
-    hint(DISABLE_DEPTH_TEST);
-    cam.beginHUD();
-    cp5.draw();
-    cam.endHUD();
-    hint(ENABLE_DEPTH_TEST);
+    hint(DISABLE_DEPTH_TEST)
+    cam.beginHUD()
+    cp5.draw()
+    cam.endHUD()
+    hint(ENABLE_DEPTH_TEST)
 
 def increase(e):
     global sl
-    if e.getAction()==ControlP5.RELEASED:
+    if e.getAction()==ControlP5.ACTION_RELEASE:
         sl += 1
         tf.setText(str(sl))
         recalc_geom(dobjs[ix])
     
 def decrease(e):
     global sl
-    if e.getAction()==ControlP5.RELEASED:
+    if e.getAction()==ControlP5.ACTION_RELEASE:
         sl -= 1
         tf.setText(str(sl))
         recalc_geom(dobjs[ix])
