@@ -1,6 +1,8 @@
 add_library('peasycam')
 add_library('HDGeo')
 
+import java.util.ArrayList as ArrayList
+
 def setup():
     global rot,cam
     size(800,450,P3D)
@@ -28,15 +30,38 @@ def draw():
     cam.endHUD()
     
 def gen_geo(rt):
-    sph = Sphere(0, 0, 0, 40)
-    bx = VBox(-20, -20, -20, 20, 20, 20, 3)
-    tw = CSGFRepTwist(bx,0.5,0)
-    transform = CSGTransform(tw)
-    transform.rotateZ(rt)
-    transform.translate(20, 20, 20)
-    transform.rotateX(rt)
-    #combine = CSGBoolSubtract(sph, transform)
-    combine = CSGBlend(sph, transform, 30)
+    # sph = Sphere(0, 0, 0, 40)
+    # bx = VBox(-20, -20, -20, 20, 20, 20, 3)
+    # tw = CSGFRepTwist(bx,0.5,0)
+    # transform = CSGTransform(tw)
+    # transform.rotateZ(rt)
+    # transform.translate(20, 20, 20)
+    # transform.rotateX(rt)
+    # #combine = CSGBoolSubtract(sph, transform)
+    
+    # lat = Lattice(-70,-70,-70,70,70,70)
+    # lat.lType = Lattice.LatticeType.Gyroid
+    # lat.scalefactor = 3
+
+    # u = CSGBoolIntersect(transform,lat)
+    # combine = CSGBoolUnion(sph, u)
+    
+    cyl = Cylinder(-20,-40,-30,30,40,20,30)
+    cyl.captype = cyl.FLAT
+    
+    ext = Extrusion(6,20,100)
+    
+    my_pts = ArrayList()
+    theta = TWO_PI/12
+    for i in range(12):
+        r = 15 + (i%2)*20
+        
+        x = r*cos(i*theta)
+        y = r*sin(i*theta)
+        my_pts.add(Point(x,y,0))
+        
+    ext = Extrusion(my_pts,100)
+    
     tree = P5OcTree(Point(0, 0, 0), 128)
-    tree.divideForPGraphics(combine,6,g)
+    tree.divideForPGraphics(ext,7,g)
     
