@@ -25,8 +25,20 @@ def setup():
     ix = 0
     dobjs = []
     st = Sphere(40,40,40,150)
+    
     bt = RBox(-50,-50,-50,280,280,280,40)
-    dobjs.append(StairUnion(bt,st))
+    tt = Transform(bt)
+    tt.m.rotateZ(0.5)
+    
+    to = Torus(0,0,0,100,50)
+    totr = Transform(to)
+    totr.m.rotateX(-1)
+    
+    dobjs.append(Subtraction(tt,totr))
+    
+    
+    
+    dobjs.append(StairUnion(tt,st))
     dobjs.append(StairIntersection(bt,st))
     dobjs.append(StairSubtraction(bt,st))
     dobjs.append(ChamferUnion(bt,st))
