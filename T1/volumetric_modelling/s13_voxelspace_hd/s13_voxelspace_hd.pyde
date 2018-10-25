@@ -10,6 +10,7 @@ def setup():
     # gyroid
     f = 0.3
     vals = [sin(x*f)*cos(y*f)+sin(y*f)*cos(z*f)+sin(z*f)*cos(x*f) for x in range(20) for y in range(30) for z in range(40)]
+    #vals = [random(-1,1) for _ in range(20*30*40)]
     vs = VoxelSpace(vals,20,30,40)
     vtm = VoxelToMesh()
     mesh = vtm.getMesh(vs,0)
