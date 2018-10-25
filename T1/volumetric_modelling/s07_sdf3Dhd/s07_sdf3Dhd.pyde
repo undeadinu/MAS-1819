@@ -65,8 +65,8 @@ def gen_geo(rt):
     tree = P5OcTree(Point(0, 0, 0), 128)
     tree.divideForPGraphics(ext,7,g)
     
-    tr = OcTree(Point(0, 0, 0), 128)
-    tr.csgSolid = ext
-    tr.divideForMesh(tr.root,128)
-    MeshToOBJ.saveMeshAsOBJ(tr.mesh,"/Users/bernham/Desktop/star.obj")
+    # tr = OcTree(Point(0, 0, 0), 128)
+    # tr.csgSolid = ext
+    # tr.divideForMesh(tr.root,128)
+    # MeshToOBJ.saveMeshAsOBJ(tr.mesh,"/Users/bernham/Desktop/star.obj")
     
