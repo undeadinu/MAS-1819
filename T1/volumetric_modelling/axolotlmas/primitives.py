@@ -208,6 +208,10 @@ class Torus(object):
                 d = m.nodes[ i*n2 + jj]
                 m.add_face(Face([a,b,c,d]))
         
+        for i in range(len(m.nodes)):
+            vadd = m.nodes[i].addition(self.loc)
+            m.nodes[i] = Node(vadd.x, vadd.y, vadd.z)
+
         return m
 
     def get_distance(self,x,y,z):
@@ -262,6 +266,10 @@ class Cylinder(object):
         m.add_node(np)
         m.add_node(sp)
         
+        for i in range(len(m.nodes)):
+            vadd = m.nodes[i].addition(self.loc)
+            m.nodes[i] = Node(vadd.x, vadd.y, vadd.z)
+
         return m
     
     def get_distance(self,x,y,z):
