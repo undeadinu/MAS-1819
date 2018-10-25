@@ -13,7 +13,7 @@ def setup():
     noStroke()
     #fill(255,0,127)
     num = 5
-    gen_geo(num)
+    hdmesh = gen_geo(num)
 
 def draw():
     background(77)
@@ -50,17 +50,16 @@ def gen_geo(n):
     tr = OcTree(Point(0, 0, 0), 128)
     tr.csgSolid = ext
     tr.divideForMesh(tr.root,128)
-    global hdmesh
-    hdmesh = tr.mesh
+    return tr.mesh
     
     # MeshToOBJ.saveMeshAsOBJ(tr.mesh,"/Users/bernham/Desktop/star.obj")
     
 def keyPressed():
-    global num
+    global num, hdmesh
     if key=='q':
         num+=1
-        gen_geo(num)
+        hdmesh = gen_geo(num)
     if key=='a':
         num=max(num-1,2)
-        gen_geo(num)
+        hdmesh = gen_geo(num)
     

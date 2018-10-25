@@ -27,7 +27,12 @@ def setup():
         p = PVector.random3D()
         plns.append(Plane(p.x,p.y,p.z,190.0))
     diamond = Intersection(plns)
-    dobjs.append(diamond)
+    
+    #dobjs.append(diamond)
+    
+    sn = Sinus(w=300,hb=-100,ht=100,off=200)
+    dobjs.append(Intersection(sn,Sphere(rad=190)))
+    
     dobjs.append(Dodecahedron(rad=190))
     dobjs.append(Gradient(Dodecahedron(rad=190),Gyroid(w=40),f=3))
     
@@ -66,6 +71,10 @@ def draw():
     directionalLight(127,255,  0, 0.5, 1, 0.3)
     directionalLight(  0,255,127, 0.5,-1, 0.3)
     shape(sh)
+    
+    stroke(255)
+    noFill()
+    box(400)
     
     gui()
 

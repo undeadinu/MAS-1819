@@ -60,16 +60,20 @@ class Sinus(object):
     """
     this is the box class
     """
-    def __init__(self, w=100,h=100):
-        self.w = w
-        self.h = h
+    def __init__(self, w=100,hb=-100,ht=100,off=0):
+        self.w = float(w)
+        self.hb = float(hb)
+        self.ht = float(ht)
+        self.off = float(off)
         
     def get_distance(self,x,y,z):
         """
         distance function
         """
-        f = (x/float(self.w))*math.pi
-        return 0.5*(math.sin(f)+1) * self.h
+        dh = (self.ht-self.hb)
+        hf = (z-self.hb)/dh
+        wf = ((x+self.off)/self.w) * (math.pi*2)
+        return ((math.cos(wf)+1)*0.5 - hf) * -100
 
 class RBox(object):
     """
